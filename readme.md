@@ -27,9 +27,6 @@ Built using Fetch API, Promises, clean UI transitions.
 
 ---
 
-## 🔗 Live Demo
-
-
 ---
 
 ## 📦 Installation
