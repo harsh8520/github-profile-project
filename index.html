@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Finder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="title-search-container">
+            <h1>GitHub User Finder</h1>
+            <div class="search-container">
+                <input type="search" name="search" id="search" placeholder="Enter GitHub Username">
+                <button class="search-btn" onclick="displayUser()">Search</button>
+            </div>
+        </div>
+
+        <div class="display-user-container">
+            <div class="user-grid top-side user-card">
+                <div class="cancel-btn" onclick="cancel()"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></div>
+                <div class="user-top">
+                    <div class="user-avatar">
+                        <img class="github-avatar" src="#" alt="image">
+                    </div>
+                    <div class="user-info">
+                        <h1 class="name">Name</h1>
+                        <span class="username">loginName</span>
+                        <p class="description">Description - Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat, culpa.</p>
+                    </div>
+                </div>
+                <div class="user-bottom">
+                    <div class="social-container">
+                        <div class="social followers">
+                            <h3 class="followers-count">0</h3>
+                            <p>Followers</p>
+                        </div>
+                        <div class="social following">
+                            <h3 class="following-count">0</h3>
+                            <p>Following</p>
+                        </div>
+                        <div class="social public-repos">
+                            <h3 class="public-repo-count">0</h3>
+                            <p>Public repos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-grid top-side top-repos-container">
+                <h1>Top Repositories</h1>
+                <div class="top-repos">
+                    <div class="repo repo-1" onclick="funcrepo()">
+                        <h3>Repo-1</h3>
+                        <div class="stars">
+                            <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                            <p>50 | Javascript</p>
+                        </div>
+                        <i class="fa-solid fa-angle-right"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="user-grid languages-used-container">
+
+            </div>
+            <div class="user-grid recent-activity-container"></div>
+        </div>
+        <div class="loader">
+            <h1>Loading</h1>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/4f5a70f2ba.js" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
