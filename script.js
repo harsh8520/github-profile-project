@@ -7,7 +7,6 @@ let publicRepos = document.querySelector('.public-repo-count')
 let githubProfileLink = document.querySelector('.github-profile-link')
 let photo = document.querySelector('.github-avatar')
 
-let searchContainer = document.querySelector('.container')
 let userCard = document.querySelector('.display-user-container')
 
 let input = document.getElementById('search')
@@ -20,6 +19,8 @@ let delay = 0.12
 let userGrid = Array.from(document.querySelectorAll('.user-grid'))
 let total = userGrid.length
 
+let topRepoContainer = document.querySelector('.top-repos')
+
 function fetchUser(data) {
     return fetch(`https://api.github.com/users/${data}`)
         .then((res) => {
@@ -29,12 +30,17 @@ function fetchUser(data) {
 
 }
 
+function fetchUserRepos(user) {
+    return fetch(`https://api.github.com/users/${user}/repos`)
+        .then(res => res.json())
+}
+
 function displayUser() {
     if (input.value.trim() === "") {
         alert("Please enter a username")
     }
     else {
-
+        userCard.style.display = 'none'
         loader.style.display = 'flex'
         document.body.style.pointerEvents = 'none'
         setTimeout(() => {
@@ -61,9 +67,28 @@ function displayUser() {
                     publicRepos.innerText = userData.public_repos
 
                     input.value = ""
+
+                    return fetchUserRepos(userData.login)
+                })
+                .then((repos) => {
+                    let s = ''
+                    repos.sort((a, b) => b.stargazers_count - a.stargazers_count)
+                    let topRepos = repos.slice(0, 5)
+                    topRepos.forEach((repo, index) => {
+                        s += `
+                    <div class="repo repo-${index + 1}" onclick="funcrepo('${repo.html_url}')">
+                        <h3>${repo.name}</h3>
+                            <div class="stars">
+                                <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                                <p>${repo.stargazers_count} | ${repo.language}</p>
+                                <i class="fa-solid fa-angle-right"></i>
+                            </div>
+                    </div>
+                        `
+                    })
+                    topRepoContainer.innerHTML = s
                 })
                 .catch((err => {
-
                     console.log(err);
                     document.body.style.pointerEvents = ''
                 }))
@@ -74,21 +99,24 @@ function displayUser() {
 
 function cancel() {
     userGrid.forEach((element, index) => {
-        element.style.animationDelay = `${(index) * delay}s`;
+        element.style.animationDelay = `${(total - index) * delay}s`;
         element.classList.remove('show')
         element.classList.add('hide')
     })
     setTimeout(() => {
+        userCard.style.visibility = 'hidden'
         userCard.style.display = 'none'
+        photo.setAttribute('src', "")
+        Name.innerText = ""
+        userName.innerText = ""
+        description.innerText = ""
+        followersCount.innerText = ""
+        followingCount.innerText = ""
+        publicRepos.innerText = ""
+        topRepoContainer.innerHTML = ''
     }, 600);
-    userCard.style.visibility = 'hidden'
-    searchContainer.style.display = 'flex'
-    photo.setAttribute('src', "")
-    Name.innerText = ""
-    userName.innerText = ""
-    description.innerText = ""
-    followersCount.innerText = ""
-    followingCount.innerText = ""
-    publicRepos.innerText = ""
-    githubProfileLink.setAttribute('href', "")
+}
+
+function funcrepo(url) {
+    window.open(url, "_blank");
 }

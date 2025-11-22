@@ -1,38 +1,26 @@
-// ===============================
-//  BACKGROUND COLORS
-// ===============================
+
 $color-bg-top: #0c2035; // dark top gradient
 $color-bg-bottom: #09121C; // dark bottom gradient
 
-// ===============================
-//  SURFACE / CARD COLORS
-// ===============================
+
 $color-surface-1: #0D1621; // main card background
 $color-surface-2: #111B25; // inner panels
 $color-surface-3: #3F424C; // borders / separators
 
-// ===============================
-//  TEXT COLORS
-// ===============================
+
 $color-text-primary: #F3F8FA; // main text
 $color-text-secondary: #B3A39E; // muted label text
 $color-text-dim: #8A8F98; // softer meta text
 
-// ===============================
-//  ACCENT COLORS
-// ===============================
+
 $color-accent-blue: #5A7F9E; // stars, small accents
 $color-accent-light: #6FA4C7; // subtle glow tones
 
-// ===============================
-//  BORDERS & LINES
-// ===============================
+
 $color-border-soft: rgba(255, 255, 255, 0.06);
 $color-border-strong: rgba(255, 255, 255, 0.12);
 
-// ===============================
-//  GRADIENTS (FINAL)
-// ===============================
+
 $gradient-app-bg: linear-gradient(90deg,
         $color-bg-top 0%,
         $color-bg-bottom 100%);
@@ -86,7 +74,7 @@ body {
 .main-container {
     display: flex;
     flex-direction: column;
-    width: 600px;
+    width: 500px;
 
     .title-search-container {
         width: 100%;
@@ -164,9 +152,10 @@ body {
 }
 
 .display-user-container {
-    display: none;
+    display: flex;
+    visibility: hidden;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-rows: repeat(3, auto);
     gap: 1rem;
     padding-bottom: 2rem;
 
@@ -175,9 +164,9 @@ body {
         background: $gradient-app-bg;
         border-radius: 12px;
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        transition: all 0.3s ease;
-        // visibility: hidden;
+        transition: opacity 0.6s ease, border 0.3s ease, visibility 0.6s ease;
         opacity: 0;
+
         &:hover {
             border: 1px solid $color-accent-blue;
         }
@@ -230,7 +219,7 @@ body {
                 width: 100px;
                 border-radius: 50%;
                 pointer-events: none;
-                z-index: 0; 
+                z-index: 0;
                 user-select: none;
 
                 img {
@@ -290,7 +279,7 @@ body {
     }
 
     .show {
-       animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
     .hide {
@@ -303,6 +292,7 @@ body {
     flex-direction: column;
     gap: 1rem;
     padding: 2rem;
+    transition: all 0.3s ease;
 
     .top-repos {
         display: flex;
@@ -310,6 +300,7 @@ body {
         justify-content: space-between;
         height: 100%;
         gap: 1rem;
+
         .repo {
             display: flex;
             justify-content: space-between;
@@ -337,25 +328,89 @@ body {
     }
 }
 
+.languages-used-container {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .languages-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .language {
+            display: grid;
+            grid-template-columns: auto auto;
+            grid-template-rows: 1fr;
+            gap: 6px;
+            justify-content: space-between;
+
+            p {
+                font-size: 1.1rem;
+                color: $color-text-dim;
+
+            }
+
+            .percentage-bar {
+                position: relative;
+                width: 100%;
+                height: 8px;
+                background-color: $color-surface-3;
+                border-radius: 50px;
+                grid-column: span 2;
+                box-shadow: 0 2px 16px #00000059;
+
+                .bar {
+                    content: "";
+                    width: 10%;
+                    height: 100%;
+                    border-radius: 50px;
+                    background-color: $color-text-primary;
+                    box-shadow: 0 2px 12px $color-text-secondary;
+                }
+            }
+        }
+    }
+}
+
 @keyframes fadeIn {
-    0%{
+    0% {
         opacity: 0;
         transform: translateY(32px);
     }
-    100%{
+
+    100% {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
 @keyframes fadeOut {
-    0%{
+    0% {
         opacity: 1;
         transform: translateY(0);
     }
-    100%{
+
+    100% {
         opacity: 0;
         transform: translateY(32px);
+    }
+}
+
+@keyframes loader {
+
+    0%,
+    100% {
+        scale: 0;
+        opacity: 0.2;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 1;
+        scale: 1.1;
+        transform: translateY(-3px);
     }
 }
 
@@ -364,9 +419,14 @@ body {
     justify-content: center;
     align-items: center;
     gap: 1rem;
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
     span {
-        width: 12px;
-        height: 12px;
+        width: 8px;
+        height: 8px;
         background-color: $color-text-primary;
         border-radius: 50%;
         animation: loader 1s cubic-bezier(0.23, 1, 0.320, 1) infinite forwards 0s;
@@ -378,25 +438,14 @@ body {
         &:nth-child(3) {
             animation-delay: 0.30s;
         }
+
         &:nth-child(4) {
             animation-delay: 0.45s;
         }
+
         &:nth-child(5) {
             animation-delay: 0.50s;
         }
-        
-    }
-}
 
-@keyframes loader {
-    0%, 100% {
-        scale: 0;
-        opacity: 0.2;
-        transform: translateY(0);
-    }
-    50% {
-        opacity: 1;
-        scale: 1.1;
-        transform: translateY(-3px);
     }
 }
